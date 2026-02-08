@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% block title %}Leave Reports{% endblock %}
+{% block content %}
+<h2 class="mb-4"><i class="bi bi-bar-chart me-2"></i>Leave Reports</h2>
+
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <form method="GET" class="row g-3 align-items-end">
+            <div class="col-md-3">
+                <label class="form-label">Month</label>
+                <select name="month" class="form-select">
+                    {% for num, name in months %}
+                    <option value="{{ num }}" {% if month_filter == num %}selected{% endif %}>{{ name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Year</label>
+                <select name="year" class="form-select">
+                    {% for y in range(current_year - 2, current_year + 2) %}
+                    <option value="{{ y }}" {% if year_filter == y %}selected{% endif %}>{{ y }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Department</label>
+                <select name="department" class="form-select">
+                    <option value="all" {% if department_filter == 'all' %}selected{% endif %}>All Departments</option>
+                    {% for dept in departments %}
+                    <option value="{{ dept }}" {% if department_filter == dept %}selected{% endif %}>{{ dept }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="bi bi-funnel me-1"></i>Generate Report
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-3 mb-3">
+        <div class="card border-primary h-100">
+            <div class="card-body text-center">
+                <h3 class="text-primary">{{ total_requests }}</h3>
+                <p class="text-muted mb-0">Total Requests</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card border-success h-100">
+            <div class="card-body text-center">
+                <h3 class="text-success">{{ approved }}</h3>
+                <p class="text-muted mb-0">Approved</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card border-danger h-100">
+            <div class="card-body text-center">
+                <h3 class="text-danger">{{ rejected }}</h3>
+                <p class="text-muted mb-0">Rejected</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card border-info h-100">
+            <div class="card-body text-center">
+                <h3 class="text-info">{{ total_days }}</h3>
+                <p class="text-muted mb-0">Total Days (Approved)</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-header bg-white">
+        <h5 class="mb-0">Detailed Report</h5>
+    </div>
+    <div class="card-body">
+        {% if leave_data %}
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>#</th>
+                        <th>Employee</th>
+                        <th>Department</th>
+                        <th>Leave Type</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Days</th>
+                        <th>Status</th>
+                        <th>Reviewed By</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for req in leave_data %}
+                    <tr>
+                        <td>{{ req.id }}</td>
+                        <td>{{ req.employee.full_name }}</td>
+                        <td>{{ req.employee.department }}</td>
+                        <td>{{ req.leave_type.name }}</td>
+                        <td>{{ req.start_date.strftime('%d %b %Y') }}</td>
+                        <td>{{ req.end_date.strftime('%d %b %Y') }}</td>
+                        <td>{{ req.num_days }}</td>
+                        <td>
+                            <span class="badge bg-{% if req.status == 'Approved' %}success{% elif req.status == 'Rejected' %}danger{% else %}warning{% endif %}">
+                                {{ req.status }}
+                            </span>
+                        </td>
+                        <td>{{ req.reviewer.full_name if req.reviewer else '-' }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="text-center py-5">
+            <i class="bi bi-inbox text-muted" style="font-size: 3rem;"></i>
+            <p class="text-muted mt-2">No leave data found for the selected period.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

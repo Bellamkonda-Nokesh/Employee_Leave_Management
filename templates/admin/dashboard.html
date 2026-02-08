@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block title %}HR Admin Dashboard{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-shield-check me-2"></i>HR Admin Dashboard</h2>
+    <a href="{{ url_for('admin.add_user') }}" class="btn btn-primary">
+        <i class="bi bi-person-plus me-1"></i>Add User
+    </a>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-3 mb-3">
+        <div class="card border-primary h-100">
+            <div class="card-body text-center">
+                <i class="bi bi-people text-primary" style="font-size: 2rem;"></i>
+                <h3 class="mt-2">{{ total_employees }}</h3>
+                <p class="text-muted mb-0">Employees</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card border-info h-100">
+            <div class="card-body text-center">
+                <i class="bi bi-person-badge text-info" style="font-size: 2rem;"></i>
+                <h3 class="mt-2">{{ total_managers }}</h3>
+                <p class="text-muted mb-0">Managers</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card border-warning h-100">
+            <div class="card-body text-center">
+                <i class="bi bi-hourglass-split text-warning" style="font-size: 2rem;"></i>
+                <h3 class="mt-2">{{ pending_requests }}</h3>
+                <p class="text-muted mb-0">Pending Requests</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card border-success h-100">
+            <div class="card-body text-center">
+                <i class="bi bi-check2-all text-success" style="font-size: 2rem;"></i>
+                <h3 class="mt-2">{{ approved_this_month }}</h3>
+                <p class="text-muted mb-0">Approved (This Month)</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+        <h5 class="mb-0"><i class="bi bi-clock-history me-2"></i>Recent Leave Requests</h5>
+        <a href="{{ url_for('admin.all_requests') }}" class="btn btn-outline-primary btn-sm">View All</a>
+    </div>
+    <div class="card-body">
+        {% if recent_requests %}
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>#</th>
+                        <th>Employee</th>
+                        <th>Department</th>
+                        <th>Leave Type</th>
+                        <th>Dates</th>
+                        <th>Days</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for req in recent_requests %}
+                    <tr>
+                        <td>{{ req.id }}</td>
+                        <td>{{ req.employee.full_name }}</td>
+                        <td>{{ req.employee.department }}</td>
+                        <td>{{ req.leave_type.name }}</td>
+                        <td>{{ req.start_date.strftime('%d %b') }} - {{ req.end_date.strftime('%d %b') }}</td>
+                        <td>{{ req.num_days }}</td>
+                        <td>
+                            <span class="badge bg-{% if req.status == 'Approved' %}success{% elif req.status == 'Rejected' %}danger{% else %}warning{% endif %}">
+                                {{ req.status }}
+                            </span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p class="text-muted text-center py-3">No leave requests yet.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

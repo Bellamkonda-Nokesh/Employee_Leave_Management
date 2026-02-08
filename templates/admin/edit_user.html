@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Edit User{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-header bg-white">
+                <h4 class="mb-0"><i class="bi bi-pencil me-2"></i>Edit User: {{ user.full_name }}</h4>
+            </div>
+            <div class="card-body p-4">
+                <form method="POST">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="first_name" class="form-label">First Name</label>
+                            <input type="text" class="form-control" id="first_name" name="first_name" value="{{ user.first_name }}" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="last_name" class="form-label">Last Name</label>
+                            <input type="text" class="form-control" id="last_name" name="last_name" value="{{ user.last_name }}" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Username</label>
+                        <input type="text" class="form-control" value="{{ user.username }}" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">New Password (leave blank to keep current)</label>
+                        <input type="password" class="form-control" id="password" name="password">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="department" class="form-label">Department</label>
+                            <select class="form-select" id="department" name="department" required>
+                                <option value="Engineering" {% if user.department == 'Engineering' %}selected{% endif %}>Engineering</option>
+                                <option value="Human Resources" {% if user.department == 'Human Resources' %}selected{% endif %}>Human Resources</option>
+                                <option value="Finance" {% if user.department == 'Finance' %}selected{% endif %}>Finance</option>
+                                <option value="Marketing" {% if user.department == 'Marketing' %}selected{% endif %}>Marketing</option>
+                                <option value="Operations" {% if user.department == 'Operations' %}selected{% endif %}>Operations</option>
+                                <option value="Sales" {% if user.department == 'Sales' %}selected{% endif %}>Sales</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="role" class="form-label">Role</label>
+                            <select class="form-select" id="role" name="role" required>
+                                <option value="employee" {% if user.role == 'employee' %}selected{% endif %}>Employee</option>
+                                <option value="manager" {% if user.role == 'manager' %}selected{% endif %}>Manager</option>
+                                <option value="admin" {% if user.role == 'admin' %}selected{% endif %}>HR Admin</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="manager_id" class="form-label">Reporting Manager</label>
+                        <select class="form-select" id="manager_id" name="manager_id">
+                            <option value="">No Manager</option>
+                            {% for m in managers %}
+                            <option value="{{ m.id }}" {% if user.manager_id == m.id %}selected{% endif %}>{{ m.full_name }} ({{ m.department }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-check-circle me-1"></i>Update User
+                        </button>
+                        <a href="{{ url_for('admin.manage_users') }}" class="btn btn-outline-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

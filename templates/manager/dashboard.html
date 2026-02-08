@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% block title %}Manager Dashboard{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-speedometer2 me-2"></i>Manager Dashboard</h2>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-3 mb-3">
+        <div class="card border-warning h-100">
+            <div class="card-body text-center">
+                <i class="bi bi-hourglass-split text-warning" style="font-size: 2rem;"></i>
+                <h3 class="mt-2">{{ pending_requests|length }}</h3>
+                <p class="text-muted mb-0">Pending (My Team)</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card border-info h-100">
+            <div class="card-body text-center">
+                <i class="bi bi-people text-info" style="font-size: 2rem;"></i>
+                <h3 class="mt-2">{{ team_members|length }}</h3>
+                <p class="text-muted mb-0">Team Members</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card border-primary h-100">
+            <div class="card-body text-center">
+                <i class="bi bi-clipboard-check text-primary" style="font-size: 2rem;"></i>
+                <h3 class="mt-2">{{ recent_actions|length }}</h3>
+                <p class="text-muted mb-0">Recent Actions</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card border-secondary h-100">
+            <div class="card-body text-center">
+                <i class="bi bi-globe text-secondary" style="font-size: 2rem;"></i>
+                <h3 class="mt-2">{{ all_pending }}</h3>
+                <p class="text-muted mb-0">All Pending (Org)</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-7 mb-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="bi bi-hourglass-split me-2"></i>Pending Requests</h5>
+                <a href="{{ url_for('manager.pending_requests') }}" class="btn btn-outline-primary btn-sm">View All</a>
+            </div>
+            <div class="card-body">
+                {% if pending_requests %}
+                <div class="table-responsive">
+                    <table class="table table-sm table-hover">
+                        <thead>
+                            <tr>
+                                <th>Employee</th>
+                                <th>Type</th>
+                                <th>Dates</th>
+                                <th>Days</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for req in pending_requests[:5] %}
+                            <tr>
+                                <td>{{ req.employee.full_name }}</td>
+                                <td>{{ req.leave_type.name }}</td>
+                                <td>{{ req.start_date.strftime('%d %b') }} - {{ req.end_date.strftime('%d %b') }}</td>
+                                <td>{{ req.num_days }}</td>
+                                <td>
+                                    <a href="{{ url_for('manager.review_request', request_id=req.id) }}" class="btn btn-primary btn-sm">Review</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-muted text-center py-3">No pending requests from your team.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5 mb-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-white">
+                <h5 class="mb-0"><i class="bi bi-people me-2"></i>My Team</h5>
+            </div>
+            <div class="card-body">
+                {% if team_members %}
+                <ul class="list-group list-group-flush">
+                    {% for member in team_members %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <i class="bi bi-person-circle me-2 text-primary"></i>
+                            {{ member.full_name }}
+                        </div>
+                        <span class="badge bg-secondary">{{ member.department }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p class="text-muted text-center">No team members assigned.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

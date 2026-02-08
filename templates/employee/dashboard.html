@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block title %}Employee Dashboard{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-speedometer2 me-2"></i>My Dashboard</h2>
+    <a href="{{ url_for('employee.apply_leave') }}" class="btn btn-primary">
+        <i class="bi bi-plus-circle me-1"></i>Apply for Leave
+    </a>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-4 mb-3">
+        <div class="card border-warning h-100">
+            <div class="card-body text-center">
+                <i class="bi bi-hourglass-split text-warning" style="font-size: 2rem;"></i>
+                <h3 class="mt-2">{{ pending_count }}</h3>
+                <p class="text-muted mb-0">Pending Requests</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card border-success h-100">
+            <div class="card-body text-center">
+                <i class="bi bi-check-circle text-success" style="font-size: 2rem;"></i>
+                <h3 class="mt-2">{{ approved_count }}</h3>
+                <p class="text-muted mb-0">Approved Leaves</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card border-primary h-100">
+            <div class="card-body text-center">
+                <i class="bi bi-wallet2 text-primary" style="font-size: 2rem;"></i>
+                <h3 class="mt-2">{{ balances|sum(attribute='remaining_days') }}</h3>
+                <p class="text-muted mb-0">Total Days Remaining</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-white">
+                <h5 class="mb-0"><i class="bi bi-wallet2 me-2"></i>Leave Balances</h5>
+            </div>
+            <div class="card-body">
+                {% for balance in balances %}
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between mb-1">
+                        <span>{{ balance.leave_type.name }}</span>
+                        <span class="text-muted">{{ balance.remaining_days }}/{{ balance.total_days }} days</span>
+                    </div>
+                    {% set pct = (balance.used_days / balance.total_days * 100) if balance.total_days > 0 else 0 %}
+                    <div class="progress" style="height: 8px;">
+                        <div class="progress-bar {% if pct > 80 %}bg-danger{% elif pct > 50 %}bg-warning{% else %}bg-success{% endif %}"
+                             style="width: {{ pct }}%"></div>
+                    </div>
+                </div>
+                {% endfor %}
+                <a href="{{ url_for('employee.balances') }}" class="btn btn-outline-primary btn-sm mt-2">View Details</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-white">
+                <h5 class="mb-0"><i class="bi bi-clock-history me-2"></i>Recent Requests</h5>
+            </div>
+            <div class="card-body">
+                {% if recent_requests %}
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Dates</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for req in recent_requests %}
+                            <tr>
+                                <td>{{ req.leave_type.name }}</td>
+                                <td>{{ req.start_date.strftime('%d %b') }} - {{ req.end_date.strftime('%d %b') }}</td>
+                                <td>
+                                    <span class="badge bg-{% if req.status == 'Approved' %}success{% elif req.status == 'Rejected' %}danger{% else %}warning{% endif %}">
+                                        {{ req.status }}
+                                    </span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-muted text-center">No leave requests yet.</p>
+                {% endif %}
+                <a href="{{ url_for('employee.my_leaves') }}" class="btn btn-outline-primary btn-sm mt-2">View All</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

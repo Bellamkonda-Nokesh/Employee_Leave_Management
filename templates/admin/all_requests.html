@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block title %}All Leave Requests{% endblock %}
+{% block content %}
+<h2 class="mb-4"><i class="bi bi-list-ul me-2"></i>All Leave Requests</h2>
+
+<div class="card shadow-sm mb-3">
+    <div class="card-body">
+        <form method="GET" class="row g-3 align-items-end">
+            <div class="col-md-4">
+                <label class="form-label">Status</label>
+                <select name="status" class="form-select">
+                    <option value="all" {% if status_filter == 'all' %}selected{% endif %}>All Status</option>
+                    <option value="Pending" {% if status_filter == 'Pending' %}selected{% endif %}>Pending</option>
+                    <option value="Approved" {% if status_filter == 'Approved' %}selected{% endif %}>Approved</option>
+                    <option value="Rejected" {% if status_filter == 'Rejected' %}selected{% endif %}>Rejected</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Department</label>
+                <select name="department" class="form-select">
+                    <option value="all" {% if department_filter == 'all' %}selected{% endif %}>All Departments</option>
+                    {% for dept in departments %}
+                    <option value="{{ dept }}" {% if department_filter == dept %}selected{% endif %}>{{ dept }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="bi bi-funnel me-1"></i>Filter
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        {% if requests %}
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>#</th>
+                        <th>Employee</th>
+                        <th>Department</th>
+                        <th>Leave Type</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Days</th>
+                        <th>Status</th>
+                        <th>Reviewed By</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for req in requests %}
+                    <tr>
+                        <td>{{ req.id }}</td>
+                        <td>{{ req.employee.full_name }}</td>
+                        <td>{{ req.employee.department }}</td>
+                        <td>{{ req.leave_type.name }}</td>
+                        <td>{{ req.start_date.strftime('%d %b %Y') }}</td>
+                        <td>{{ req.end_date.strftime('%d %b %Y') }}</td>
+                        <td>{{ req.num_days }}</td>
+                        <td>
+                            <span class="badge bg-{% if req.status == 'Approved' %}success{% elif req.status == 'Rejected' %}danger{% else %}warning{% endif %}">
+                                {{ req.status }}
+                            </span>
+                        </td>
+                        <td>{{ req.reviewer.full_name if req.reviewer else '-' }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="text-center py-5">
+            <i class="bi bi-inbox text-muted" style="font-size: 3rem;"></i>
+            <p class="text-muted mt-2">No leave requests found matching your filters.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

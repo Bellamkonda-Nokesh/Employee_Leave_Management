@@ -1,0 +1,59 @@
+body {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.container.mt-4 {
+    flex: 1;
+}
+
+.card {
+    border-radius: 10px;
+    border: 1px solid #e9ecef;
+}
+
+.card-header {
+    border-radius: 10px 10px 0 0 !important;
+}
+
+.navbar-brand {
+    font-size: 1.3rem;
+}
+
+.badge {
+    font-weight: 500;
+}
+
+.progress {
+    border-radius: 10px;
+}
+
+.table th {
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #6c757d;
+}
+
+.btn {
+    border-radius: 8px;
+}
+
+.form-control, .form-select {
+    border-radius: 8px;
+}
+
+.shadow-sm {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+}
+
+.alert {
+    border-radius: 10px;
+}
+
+footer {
+    margin-top: auto !important;
+}
