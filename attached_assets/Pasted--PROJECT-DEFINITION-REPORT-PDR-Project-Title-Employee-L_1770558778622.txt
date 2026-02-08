@@ -1,0 +1,219 @@
+📘 PROJECT DEFINITION REPORT (PDR)
+Project Title
+
+Employee Leave Management System
+
+1. Project Overview
+
+The Employee Leave Management System is a role-based software application designed to automate and manage employee leave requests, approvals, and reporting processes within an organization. The system replaces traditional manual methods such as emails, spreadsheets, and paper forms with a centralized, secure, and efficient digital platform.
+
+The application supports multiple user roles including Employee, Manager, and HR/Admin, ensuring controlled access, transparent workflows, and accurate leave tracking.
+
+2. Problem Statement
+
+Many organizations still rely on manual or semi-automated leave management processes, which result in inefficiencies, data inconsistencies, delayed approvals, and reporting challenges. Employees often lack visibility into their leave status, managers struggle to track pending requests, and HR teams face difficulties generating accurate monthly or annual reports.
+
+As organizations grow in size and adopt hybrid or remote work models, these issues become more critical, leading to operational delays, payroll errors, and employee dissatisfaction.
+
+3. Causes of the Problem
+
+The key causes contributing to inefficient leave management are:
+
+Manual Processes
+
+Use of emails, spreadsheets, and paper-based forms
+
+High risk of errors and data loss
+
+Lack of Centralized System
+
+Leave data scattered across multiple files
+
+No single source of truth
+
+No Role-Based Access Control
+
+Employees, managers, and HR accessing shared files
+
+Security and authorization issues
+
+Poor Reporting Mechanism
+
+Manual preparation of HR reports
+
+Time-consuming and error-prone
+
+Scalability Issues
+
+Existing methods fail as employee count increases
+
+4. Purpose of the Project
+
+The purpose of this project is to design and develop a centralized, automated, and role-based leave management system that simplifies leave workflows, ensures data accuracy, and improves HR operational efficiency.
+
+5. Objectives of the Project
+Functional Objectives
+
+Allow employees to apply for leave online
+
+Enable managers to approve or reject leave requests
+
+Maintain accurate leave balances
+
+Generate automated monthly HR reports
+
+Provide role-based access to users
+
+Non-Functional Objectives
+
+Ensure data security and integrity
+
+Improve system usability
+
+Reduce manual effort and processing time
+
+Support future scalability
+
+6. Scope of the Project
+In Scope
+
+User authentication and authorization
+
+Role-based access (Employee, Manager, HR)
+
+Leave request and approval workflow
+
+Leave balance tracking
+
+Automated reporting
+
+Database integration
+
+Out of Scope
+
+Payroll processing
+
+Attendance tracking
+
+Mobile application (future enhancement)
+
+7. Target Users
+User Role	Description
+Employee	Applies for leave and tracks status
+Manager	Reviews and approves/rejects leave requests
+HR/Admin	Manages users, policies, and reports
+8. Proposed Solution
+
+The proposed system is a web-based application that provides:
+
+Centralized leave data storage
+
+Automated approval workflows
+
+Real-time leave status tracking
+
+Secure role-based access
+
+Auto-generated HR reports
+
+The system significantly reduces manual intervention and improves transparency across all stakeholders.
+
+9. Technology Stack Selection
+Recommended Stack (Python-Based Full Stack)
+Layer	Technology
+Frontend	HTML, CSS, Bootstrap (or React – optional)
+Backend	Python (Flask / Django)
+Database	MySQL
+Authentication	Role-based login
+Reporting	SQL Queries + Python
+Why Python-Based Stack?
+
+Easy to develop and maintain
+
+Strong database and reporting support
+
+Widely used in industry
+
+Suitable for freshers and internships
+
+10. System Architecture Overview
+
+Frontend Layer: User interface for employees, managers, and HR
+
+Backend Layer: Business logic, authentication, approval workflows
+
+Database Layer: Stores user data, leave records, approvals
+
+Reporting Module: Generates automated monthly reports
+
+11. Database Overview
+Key Tables
+
+Users
+
+Roles
+
+Leave_Requests
+
+Leave_Balances
+
+Approvals
+
+Reports
+
+The database ensures data consistency, integrity, and security through constraints and role-based access.
+
+12. Project Deliverables
+
+Functional Employee Leave Management System
+
+Database schema and ER diagram
+
+Automated HR reports
+
+Test cases and documentation
+
+Project report and presentation
+
+13. Tools Used
+
+Programming Language: Python
+
+Database: MySQL
+
+IDE: VS Code / PyCharm
+
+Version Control: Git & GitHub
+
+14. Risks and Mitigation
+Risk	Mitigation
+Data inconsistency	Use relational database constraints
+Unauthorized access	Role-based authentication
+Scalability issues	Modular system design
+15. Expected Outcomes
+
+Reduced HR manual workload
+
+Faster leave approval cycles
+
+Improved data accuracy
+
+Better employee satisfaction
+
+Reliable reporting system
+
+16. Future Enhancements
+
+Mobile application support
+
+Email notifications
+
+Leave policy configuration
+
+Dashboard analytics
+
+Cloud deployment
+
+17. Conclusion
+
+The Employee Leave Management System provides a practical solution to a common organizational challenge by automating leave workflows and centralizing data management. The project demonstrates real-world application development skills, including backend logic, database management, role-based access control, and reporting, making it highly valuable for academic and professional purposes.
