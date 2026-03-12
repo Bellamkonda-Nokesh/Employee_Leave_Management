@@ -360,4 +360,4 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-<p align="center">Built with ❤️ using Flask &nbsp;|&nbsp; LeaveFlow Pro &copy; 2026</p>
+<p align="center">Built with ❤️ By Nokesh &nbsp;|&nbsp; LeaveFlow Pro &copy; 2026</p>
