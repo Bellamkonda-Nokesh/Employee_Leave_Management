@@ -1,8 +1,28 @@
 # 🗓️ LeaveFlow Pro — Employee Leave Management System
 
+<p align="center">
+  <a href="https://leavepilot.vercel.app" target="_blank">
+    <img src="https://img.shields.io/badge/🚀%20Live%20Demo-leavepilot.vercel.app-4f46e5?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Demo" />
+  </a>
+  &nbsp;
+  <a href="https://github.com/Bellamkonda-Nokesh/Employee_Leave_Management" target="_blank">
+    <img src="https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Repo" />
+  </a>
+  &nbsp;
+  <img src="https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
+  &nbsp;
+  <img src="https://img.shields.io/badge/Flask-3.x-000000?style=for-the-badge&logo=flask&logoColor=white" alt="Flask" />
+  &nbsp;
+  <img src="https://img.shields.io/badge/PostgreSQL-Neon-00E599?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL" />
+</p>
+
+<br/>
+
 > **Streamline every leave request, from application to approval.**
 
 LeaveFlow Pro is a full-stack web application built with **Flask** that brings structure and clarity to employee leave management. It provides a role-based portal where **employees** apply for leave, **managers** review team requests, and **admins** oversee the entire organisation — all from a clean, intuitive dashboard.
+
+🌐 **Live at → [leavepilot.vercel.app](https://leavepilot.vercel.app)**
 
 ---
 
@@ -20,6 +40,7 @@ LeaveFlow Pro is a full-stack web application built with **Flask** that brings s
 - [Database Schema](#-database-schema)
 - [Deployment](#-deployment)
 - [Contributing](#-contributing)
+- [Live Demo](#-live-demo)
 
 ---
 
@@ -141,7 +162,7 @@ Employee_Leave_Management/
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/Employee_Leave_Management.git
+git clone https://github.com/Bellamkonda-Nokesh/Employee_Leave_Management.git
 cd Employee_Leave_Management
 ```
 
@@ -318,26 +339,35 @@ leave_requests
 
 ## 🌐 Deployment
 
-### Production with Gunicorn
+### ✅ Deployed on Vercel
+
+This project is live at **[https://leavepilot.vercel.app](https://leavepilot.vercel.app)**
+
+The deployment uses:
+- **Vercel** — Serverless Python hosting (`@vercel/python`)
+- **Neon PostgreSQL** — Managed serverless database
+- **`vercel.json`** — Routes all traffic through `wsgi.py`
+
+### Deploy Your Own Fork
+
+1. Fork this repository on GitHub
+2. Go to [vercel.com](https://vercel.com) → **Add New Project** → Import your fork
+3. Set the following **Environment Variables** in Vercel dashboard:
+
+```env
+SESSION_SECRET=<strong-random-key>
+DATABASE_URL=postgresql://<user>:<password>@<host>/<dbname>?sslmode=require
+```
+
+4. Click **Deploy** — tables and seed data are created automatically on first run ✅
+
+> 💡 **Free PostgreSQL:** Use [neon.tech](https://neon.tech) for a free hosted PostgreSQL database.
+
+### Self-Hosted / VPS (Gunicorn)
 
 ```bash
 gunicorn wsgi:app --bind 0.0.0.0:8000 --workers 4
 ```
-
-### Environment Setup for Production
-
-Make sure to set these environment variables on your server (or in your deployment platform's dashboard):
-
-```env
-SESSION_SECRET=<strong-random-key>
-DATABASE_URL=postgresql://<user>:<password>@<host>:<port>/<dbname>
-```
-
-### Platform Deployment (e.g., Render, Railway, Heroku)
-
-1. Set the start command to: `gunicorn wsgi:app`
-2. Set all environment variables via the platform dashboard
-3. The database tables and seed data are created automatically on first run
 
 ---
 
@@ -360,4 +390,17 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-<p align="center">Built with ❤️ By Nokesh &nbsp;|&nbsp; LeaveFlow Pro &copy; 2026</p>
+---
+
+## 🔗 Live Demo
+
+| | |
+|---|---|
+| 🌐 **Live URL** | [https://leavepilot.vercel.app](https://leavepilot.vercel.app) |
+| 📦 **GitHub** | [Bellamkonda-Nokesh/Employee_Leave_Management](https://github.com/Bellamkonda-Nokesh/Employee_Leave_Management) |
+| ☁️ **Hosting** | Vercel (Serverless Python) |
+| 🗄️ **Database** | Neon PostgreSQL |
+
+---
+
+<p align="center">Built with ❤️ by <strong>Nokesh</strong> &nbsp;|&nbsp; LeaveFlow Pro &copy; 2026 &nbsp;|&nbsp; <a href="https://leavepilot.vercel.app">leavepilot.vercel.app</a></p>
