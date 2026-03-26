@@ -1,406 +1,150 @@
-# 🗓️ LeaveFlow Pro — Employee Leave Management System
+# 🗓️ LeaveFlow Pro
 
 <p align="center">
-  <a href="https://leavepilot.vercel.app" target="_blank">
-    <img src="https://img.shields.io/badge/🚀%20Live%20Demo-leavepilot.vercel.app-4f46e5?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Demo" />
+  <a href="https://leavepilot.vercel.app">
+    <img src="https://img.shields.io/badge/🚀 Live Demo-leavepilot.vercel.app-7c3aed?style=for-the-badge" />
   </a>
   &nbsp;
-  <a href="https://github.com/Bellamkonda-Nokesh/Employee_Leave_Management" target="_blank">
-    <img src="https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub Repo" />
+  <a href="https://github.com/Bellamkonda-Nokesh/Employee_Leave_Management">
+    <img src="https://img.shields.io/badge/GitHub-Source Code-181717?style=for-the-badge&logo=github" />
   </a>
   &nbsp;
-  <img src="https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
-  &nbsp;
-  <img src="https://img.shields.io/badge/Flask-3.x-000000?style=for-the-badge&logo=flask&logoColor=white" alt="Flask" />
-  &nbsp;
-  <img src="https://img.shields.io/badge/PostgreSQL-Neon-00E599?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL" />
+  <img src="https://img.shields.io/badge/Python-Flask-000000?style=for-the-badge&logo=flask" />
 </p>
 
-<br/>
-
-> **Streamline every leave request, from application to approval.**
-
-LeaveFlow Pro is a full-stack web application built with **Flask** that brings structure and clarity to employee leave management. It provides a role-based portal where **employees** apply for leave, **managers** review team requests, and **admins** oversee the entire organisation — all from a clean, intuitive dashboard.
-
-🌐 **Live at → [leavepilot.vercel.app](https://leavepilot.vercel.app)**
+<p align="center">
+  <strong>A simple, role-based employee leave management web app built with Flask.</strong><br/>
+  Employees apply for leave. Managers approve. Admins oversee everything.
+</p>
 
 ---
 
-## 📋 Table of Contents
+## 😓 The Problem
 
-- [Features](#-features)
-- [Tech Stack](#-tech-stack)
-- [Project Structure](#-project-structure)
-- [Roles & Permissions](#-roles--permissions)
-- [Getting Started](#-getting-started)
-- [Configuration](#-configuration)
-- [Default Demo Credentials](#-default-demo-credentials)
-- [Leave Types](#-leave-types)
-- [API Routes Reference](#-api-routes-reference)
-- [Database Schema](#-database-schema)
-- [Deployment](#-deployment)
-- [Contributing](#-contributing)
-- [Live Demo](#-live-demo)
+Managing employee leaves in most companies is a **mess**:
+
+- 📧 Requests sent over email — easy to miss or forget
+- 📋 Leave records tracked in spreadsheets — gets outdated fast
+- ❓ Employees don't know their leave balance until it's too late
+- ⏳ Managers have no single place to see pending approvals
+- 📊 HR/Admin has no easy way to generate reports
+
+> *"I sent a leave request 3 days ago — did my manager even see it?"*
+> This is a real, daily frustration for thousands of employees.
 
 ---
 
-## ✨ Features
+## ✅ How LeaveFlow Pro Solves It
 
-### 👤 For Employees
-- 📝 **Apply for Leave** — Submit leave requests with type, date range, and reason
-- 📊 **Leave Balance Tracker** — View remaining days per leave category for the current year
-- 🗂️ **Request History** — Filter and track all past and pending requests
-- 🔔 **Real-time Status** — Instant feedback on approval/rejection with reviewer comments
+| Problem | Solution |
+|---|---|
+| Emails go missing | Requests are stored in the system — never lost |
+| No visibility on balance | Dashboard shows real-time leave balance per type |
+| Manager forgets to approve | Pending requests are always visible on manager's dashboard |
+| HR can't track leaves | Admin gets org-wide reports filtered by month/department |
+| No audit trail | Every approval/rejection is logged with timestamp & comments |
 
-### 👔 For Managers
-- ⚡ **Team Dashboard** — Overview of pending requests from direct reports
-- ✅ **Approve / Reject** — Review requests with optional comments
-- 📜 **Team Leave History** — Full audit trail of all team leave activity
-- 👁️ **Balance Visibility** — See employee's remaining leave balance during review
+**In short:** One system. Three roles. Zero chaos.
 
-### 🛡️ For Admins
-- 📈 **Organisation Dashboard** — High-level stats: total employees, managers, pending requests, monthly approvals
-- 👥 **User Management** — Create, edit, activate/deactivate any user account
-- 🔍 **All Requests View** — Filter by status and department across the entire org
-- 📑 **Reports** — Monthly leave reports filterable by month, year, and department
-- 🔑 **Role Control** — Assign employee, manager, or admin roles
+---
+
+## 🌐 Live App
+
+👉 **[https://leavepilot.vercel.app](https://leavepilot.vercel.app)**
+
+Try it instantly with these demo accounts:
+
+| Role | Username | Password |
+|---|---|---|
+| 🛡️ Admin | `admin` | `admin123` |
+| 👔 Manager | `manager` | `manager123` |
+| 👤 Employee | `employee` | `employee123` |
+
+---
+
+## ✨ What It Does
+
+| Who | Can Do |
+|---|---|
+| **Employee** | Apply for leave, check balance, view history |
+| **Manager** | Approve/reject team requests, view team history |
+| **Admin** | Manage all users, view all requests, generate reports |
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Layer | Technology |
-|---|---|
-| **Backend Framework** | [Flask 3.x](https://flask.palletsprojects.com/) |
-| **ORM / Database** | [Flask-SQLAlchemy 3.x](https://flask-sqlalchemy.palletsprojects.com/) + SQLAlchemy 2.0 |
-| **Authentication** | [Flask-Login](https://flask-login.readthedocs.io/) |
-| **CSRF Protection** | [Flask-WTF](https://flask-wtf.readthedocs.io/) |
-| **Password Hashing** | [Werkzeug Security](https://werkzeug.palletsprojects.com/) |
-| **Environment Config** | [python-dotenv](https://pypi.org/project/python-dotenv/) |
-| **Primary Database** | PostgreSQL (via psycopg2-binary) |
-| **Fallback Database** | SQLite (zero-config for development) |
-| **WSGI Server (Prod)** | [Gunicorn](https://gunicorn.org/) |
-| **Proxy Support** | Werkzeug ProxyFix |
-| **Templating** | Jinja2 |
+- **Backend** — Python, Flask
+- **Database** — PostgreSQL (Neon) / SQLite fallback
+- **Auth** — Flask-Login + CSRF protection
+- **Hosting** — Vercel (serverless)
 
 ---
 
 ## 📁 Project Structure
 
 ```
-Employee_Leave_Management/
-│
-├── app.py                  # Application factory (create_app) + DB seeding
-├── models.py               # SQLAlchemy models: User, LeaveType, LeaveBalance, LeaveRequest
-├── wsgi.py                 # WSGI entry point (dev + production)
-├── main.py                 # Convenience launcher
-├── .env                    # Environment variables (not committed)
-├── .gitignore
-│
-├── blueprints/             # Flask Blueprints (feature modules)
-│   ├── __init__.py
-│   ├── auth.py             # Login, Register, Logout
-│   ├── employee.py         # Employee dashboard, apply leave, balances
-│   ├── manager.py          # Manager dashboard, review, team history
-│   └── admin.py            # Admin dashboard, user mgmt, reports
-│
+├── app.py           # App factory & DB setup
+├── models.py        # Database models
+├── wsgi.py          # Entry point
+├── vercel.json      # Vercel config
+├── requirements.txt # Dependencies
+├── blueprints/      # Routes (auth, employee, manager, admin)
 └── frontend/
-    ├── static/
-    │   └── css/            # Stylesheets
-    └── templates/
-        ├── base.html       # Shared base layout
-        ├── auth/
-        │   ├── login.html
-        │   └── register.html
-        ├── employee/
-        │   ├── dashboard.html
-        │   ├── apply_leave.html
-        │   ├── my_leaves.html
-        │   └── balances.html
-        ├── manager/
-        │   ├── dashboard.html
-        │   ├── pending_requests.html
-        │   ├── review_request.html
-        │   └── team_history.html
-        └── admin/
-            ├── dashboard.html
-            ├── users.html
-            ├── add_user.html
-            ├── edit_user.html
-            ├── all_requests.html
-            ├── pending.html
-            ├── review_request.html
-            └── reports.html
+    ├── static/      # CSS
+    └── templates/   # HTML pages (split-panel login, dashboards)
 ```
 
 ---
 
-## 🔐 Roles & Permissions
-
-| Feature | Employee | Manager | Admin |
-|---|:---:|:---:|:---:|
-| Apply for Leave | ✅ | ✅ | ✅ |
-| View Own Balances | ✅ | ✅ | ✅ |
-| View Own History | ✅ | ✅ | ✅ |
-| Review Team Requests | ❌ | ✅ | ✅ |
-| View Team History | ❌ | ✅ | ✅ |
-| Manage All Users | ❌ | ❌ | ✅ |
-| View All Requests | ❌ | ❌ | ✅ |
-| Generate Reports | ❌ | ❌ | ✅ |
-| Assign Roles | ❌ | ❌ | ✅ |
-
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-- Python **3.10+**
-- PostgreSQL (optional — SQLite is used automatically if no `DATABASE_URL` is set)
-- `pip` and `venv`
-
-### 1. Clone the Repository
+## 🚀 Run Locally
 
 ```bash
+# 1. Clone
 git clone https://github.com/Bellamkonda-Nokesh/Employee_Leave_Management.git
 cd Employee_Leave_Management
-```
 
-### 2. Create and Activate a Virtual Environment
-
-```bash
-# Windows
+# 2. Create virtual environment
 python -m venv venv
-venv\Scripts\activate
+venv\Scripts\activate        # Windows
+# source venv/bin/activate   # Mac/Linux
 
-# macOS / Linux
-python -m venv venv
-source venv/bin/activate
-```
+# 3. Install dependencies
+pip install -r requirements.txt
 
-### 3. Install Dependencies
+# 4. Set environment variables (create .env file)
+SESSION_SECRET=your-secret-key
+DATABASE_URL=postgresql://...   # or leave blank to use SQLite
 
-```bash
-pip install flask flask-sqlalchemy flask-login flask-wtf python-dotenv psycopg2-binary gunicorn
-```
-
-### 4. Configure Environment Variables
-
-Create a `.env` file in the project root:
-
-```env
-SESSION_SECRET=your-super-secret-key-here
-DATABASE_URL=postgresql://username:password@localhost:5432/leave_management
-```
-
-> **Tip:** If `DATABASE_URL` is not set, the app automatically falls back to SQLite (`instance/leaveflow.db`).
-
-### 5. Run the Application
-
-```bash
-# Development server
+# 5. Run
 python wsgi.py
 ```
 
-The app will be available at **http://localhost:5000**.
-
-On first run, the database tables are created automatically and seeded with default leave types and three demo users.
+App runs at **http://localhost:5000** — DB tables and demo users are created automatically on first run.
 
 ---
 
-## ⚙️ Configuration
+## 🗂️ Leave Types (Pre-loaded)
 
-| Environment Variable | Description | Default |
-|---|---|---|
-| `SESSION_SECRET` | Secret key for Flask sessions & CSRF | `dev-secret-key` |
-| `FLASK_SECRET_KEY` | Alternative secret key variable | — |
-| `DATABASE_URL` | Full database connection URL | `sqlite:///leaveflow.db` |
-
-> ⚠️ **Always set a strong `SESSION_SECRET` in production!**
-
----
-
-## 🔑 Default Demo Credentials
-
-These accounts are automatically created when the database is empty:
-
-| Role | Username | Password | Email |
-|---|---|---|---|
-| 🛡️ Admin | `admin` | `admin123` | admin@company.com |
-| 👔 Manager | `manager` | `manager123` | manager@company.com |
-| 👤 Employee | `employee` | `employee123` | employee@company.com |
-
-> The demo employee (`Jane Employee`) is pre-assigned to the demo manager (`John Manager`).
-
----
-
-## 🗂️ Leave Types
-
-The following leave types are seeded by default:
-
-| Leave Type | Default Days | Description |
-|---|---|---|
-| Casual Leave | 12 | For personal purposes |
-| Sick Leave | 10 | For medical reasons |
-| Earned Leave | 15 | Planned vacations |
-| Maternity Leave | 180 | For expecting mothers |
-| Paternity Leave | 15 | For new fathers |
-
-Leave balances are tracked **per employee, per leave type, per year**.
-
----
-
-## 🗺️ API Routes Reference
-
-### Authentication (`/`)
-| Method | Route | Description |
-|---|---|---|
-| GET | `/` | Redirect based on role |
-| GET/POST | `/login` | Login page |
-| GET/POST | `/register` | Self-registration |
-| GET | `/logout` | Logout |
-
-### Employee (`/employee/`)
-| Method | Route | Description |
-|---|---|---|
-| GET | `/employee/dashboard` | Employee home |
-| GET/POST | `/employee/apply` | Submit leave request |
-| GET | `/employee/my-leaves` | View own leave history |
-| GET | `/employee/balances` | View leave balances |
-
-### Manager (`/manager/`)
-| Method | Route | Description |
-|---|---|---|
-| GET | `/manager/dashboard` | Manager home |
-| GET | `/manager/pending` | Pending team requests |
-| GET/POST | `/manager/review/<id>` | Approve/Reject request |
-| GET | `/manager/history` | Complete team history |
-
-### Admin (`/admin/`)
-| Method | Route | Description |
-|---|---|---|
-| GET | `/admin/dashboard` | Admin home with KPIs |
-| GET | `/admin/users` | List all users |
-| GET/POST | `/admin/users/add` | Create new user |
-| GET/POST | `/admin/users/edit/<id>` | Edit user details |
-| GET | `/admin/users/toggle/<id>` | Activate/Deactivate user |
-| GET | `/admin/all-requests` | All org leave requests |
-| GET | `/admin/pending` | All pending requests |
-| GET/POST | `/admin/review/<id>` | Admin review request |
-| GET | `/admin/reports` | Leave reports |
-
----
-
-## 🗄️ Database Schema
-
-```
-users
-├── id (PK)
-├── email (unique)
-├── username (unique)
-├── password_hash
-├── first_name, last_name
-├── department
-├── role  ['employee' | 'manager' | 'admin']
-├── is_active_user
-├── created_at
-└── manager_id (FK → users.id)
-
-leave_types
-├── id (PK)
-├── name (unique)
-├── default_days
-└── description
-
-leave_balances
-├── id (PK)
-├── employee_id (FK → users.id)
-├── leave_type_id (FK → leave_types.id)
-├── total_days
-├── used_days
-└── year
-  [UNIQUE: employee_id + leave_type_id + year]
-
-leave_requests
-├── id (PK)
-├── employee_id (FK → users.id)
-├── leave_type_id (FK → leave_types.id)
-├── start_date, end_date
-├── num_days
-├── reason
-├── status  ['Pending' | 'Approved' | 'Rejected']
-├── applied_on
-├── reviewed_by (FK → users.id)
-├── reviewed_on
-└── reviewer_comment
-```
-
----
-
-## 🌐 Deployment
-
-### ✅ Deployed on Vercel
-
-This project is live at **[https://leavepilot.vercel.app](https://leavepilot.vercel.app)**
-
-The deployment uses:
-- **Vercel** — Serverless Python hosting (`@vercel/python`)
-- **Neon PostgreSQL** — Managed serverless database
-- **`vercel.json`** — Routes all traffic through `wsgi.py`
-
-### Deploy Your Own Fork
-
-1. Fork this repository on GitHub
-2. Go to [vercel.com](https://vercel.com) → **Add New Project** → Import your fork
-3. Set the following **Environment Variables** in Vercel dashboard:
-
-```env
-SESSION_SECRET=<strong-random-key>
-DATABASE_URL=postgresql://<user>:<password>@<host>/<dbname>?sslmode=require
-```
-
-4. Click **Deploy** — tables and seed data are created automatically on first run ✅
-
-> 💡 **Free PostgreSQL:** Use [neon.tech](https://neon.tech) for a free hosted PostgreSQL database.
-
-### Self-Hosted / VPS (Gunicorn)
-
-```bash
-gunicorn wsgi:app --bind 0.0.0.0:8000 --workers 4
-```
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! To contribute:
-
-1. Fork the repository
-2. Create a new branch: `git checkout -b feature/your-feature-name`
-3. Commit your changes: `git commit -m "feat: add your feature"`
-4. Push and open a Pull Request
-
-Please follow consistent code style and keep blueprints modular.
-
----
-
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
----
-
----
-
-## 🔗 Live Demo
-
-| | |
+| Type | Days |
 |---|---|
-| 🌐 **Live URL** | [https://leavepilot.vercel.app](https://leavepilot.vercel.app) |
-| 📦 **GitHub** | [Bellamkonda-Nokesh/Employee_Leave_Management](https://github.com/Bellamkonda-Nokesh/Employee_Leave_Management) |
-| ☁️ **Hosting** | Vercel (Serverless Python) |
-| 🗄️ **Database** | Neon PostgreSQL |
+| Casual Leave | 12 |
+| Sick Leave | 10 |
+| Earned Leave | 15 |
+| Maternity Leave | 180 |
+| Paternity Leave | 15 |
 
 ---
 
-<p align="center">Built with ❤️ by <strong>Nokesh</strong> &nbsp;|&nbsp; LeaveFlow Pro &copy; 2026 &nbsp;|&nbsp; <a href="https://leavepilot.vercel.app">leavepilot.vercel.app</a></p>
+## ☁️ Deploy to Vercel
+
+1. Fork this repo
+2. Go to [vercel.com](https://vercel.com) → **Add New Project** → Import your fork
+3. Set environment variables:
+   - `SESSION_SECRET` = any random string
+   - `DATABASE_URL` = PostgreSQL URL (free at [neon.tech](https://neon.tech))
+4. Click **Deploy** ✅
+
+---
+
+<p align="center">Built with ❤️ by <strong>Nokesh</strong> &nbsp;|&nbsp; <a href="https://leavepilot.vercel.app">leavepilot.vercel.app</a></p>
