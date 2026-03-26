@@ -6,187 +6,449 @@
     <title>Create Account — LeaveFlow Pro</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
-    <script>
-      (function(){
-        var t = localStorage.getItem('lf-theme') || 'light';
-        document.documentElement.setAttribute('data-theme', t);
-      })();
-    </script>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --v-purple: #8b5cf6;
+            --v-cyan:   #06b6d4;
+            --v-pink:   #ec4899;
+            --v-green:  #10b981;
+            --v-amber:  #f59e0b;
+            --bg-left:  #06040f;
+            --bg-right: #0c0e16;
+            --border:   rgba(255,255,255,0.08);
+            --text-soft:#cbd5e1;
+            --text-muted:#64748b;
+        }
+
+        html, body {
+            height: 100%;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-left);
+            color: #fff;
+            overflow: hidden;
+        }
+
+        .split { display: flex; height: 100vh; width: 100vw; }
+
+        /* ══════ LEFT ══════ */
+        .left {
+            flex: 0 0 42%;
+            background: var(--bg-left);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 2.2rem 2.8rem;
+            overflow: hidden;
+        }
+        .orb { position: absolute; border-radius: 50%; filter: blur(65px); opacity: 0.5; pointer-events: none; }
+        .orb-a { width: 380px; height: 380px; background: radial-gradient(circle, #7c3aed, transparent 70%); top: -120px; right: -80px; animation: pulse 9s ease-in-out infinite; }
+        .orb-b { width: 280px; height: 280px; background: radial-gradient(circle, #0891b2, transparent 70%); bottom: -80px; left: -60px; animation: pulse 12s ease-in-out infinite reverse; }
+        .orb-c { width: 160px; height: 160px; background: radial-gradient(circle, #ec4899, transparent 70%); top: 55%; right: 20%; opacity: 0.3; animation: pulse 14s ease-in-out infinite; }
+        @keyframes pulse { 0%,100%{transform:scale(1);opacity:0.5;} 50%{transform:scale(1.15);opacity:0.65;} }
+
+        .left::before {
+            content: '';
+            position: absolute; inset: 0;
+            background-image: radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px);
+            background-size: 28px 28px;
+            pointer-events: none;
+        }
+
+        .brand { display: flex; align-items: center; gap: 0.7rem; position: relative; z-index: 1; }
+        .brand-icon {
+            width: 40px; height: 40px;
+            background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1rem; color: #fff;
+            box-shadow: 0 0 24px rgba(139,92,246,0.55);
+        }
+        .brand-name { font-family: 'Plus Jakarta Sans',sans-serif; font-weight: 800; font-size: 1.1rem; }
+        .brand-sub  { font-size: 0.63rem; color: var(--text-muted); }
+
+        .hero { position: relative; z-index: 1; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        .eyebrow {
+            font-size: 0.68rem; font-weight: 700; letter-spacing: 3px;
+            text-transform: uppercase; color: var(--v-pink);
+            display: flex; align-items: center; gap: 0.5rem;
+            margin-bottom: 0.9rem;
+        }
+        .eyebrow::before { content: ''; width: 20px; height: 2px; background: var(--v-pink); border-radius: 2px; }
+
+        .headline {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: clamp(1.8rem, 3vw, 2.6rem);
+            font-weight: 900; line-height: 1.12;
+            color: #fff; margin-bottom: 1rem;
+        }
+        .headline .grad {
+            background: linear-gradient(90deg, #ec4899, #a855f7);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .tagline {
+            font-size: 0.9rem; color: var(--text-soft);
+            line-height: 1.7; max-width: 330px;
+            margin-bottom: 1.8rem;
+        }
+
+        /* Steps list */
+        .steps { display: flex; flex-direction: column; gap: 0.7rem; }
+        .step {
+            display: flex; align-items: flex-start; gap: 0.85rem;
+            padding: 0.7rem 0.85rem;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.07);
+            transition: all 0.25s;
+        }
+        .step:hover {
+            border-color: rgba(236,72,153,0.4);
+            background: rgba(236,72,153,0.07);
+            transform: translateX(4px);
+        }
+        .step-num {
+            width: 26px; height: 26px; border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.75rem; font-weight: 800;
+            flex-shrink: 0;
+        }
+        .step-text { font-size: 0.85rem; color: var(--text-soft); font-weight: 500; padding-top: 2px; }
+        .step-text b { color: #fff; font-weight: 700; }
+
+        .quote-bar {
+            position: relative; z-index: 1;
+            border-top: 1px solid rgba(255,255,255,0.07);
+            padding-top: 1rem;
+        }
+        .quote-bar p { font-size: 0.78rem; font-style: italic; color: var(--text-muted); line-height: 1.6; }
+        .quote-bar p::before { content: '"'; color: var(--v-pink); font-size: 1.1rem; font-style: normal; }
+        .quote-bar p::after  { content: '"'; color: var(--v-pink); font-size: 1.1rem; font-style: normal; }
+
+        /* ══════ RIGHT ══════ */
+        .right {
+            flex: 0 0 58%;
+            background: var(--bg-right);
+            border-left: 1px solid rgba(255,255,255,0.06);
+            display: flex; flex-direction: column; justify-content: center;
+            padding: 2rem 3.5rem;
+            overflow-y: auto;
+            position: relative;
+        }
+        .right::before {
+            content: '';
+            position: absolute; top: -60px; right: -60px;
+            width: 260px; height: 260px;
+            background: radial-gradient(circle, rgba(236,72,153,0.1), transparent 70%);
+            border-radius: 50%; pointer-events: none;
+        }
+
+        .badge-new {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            font-size: 0.65rem; font-weight: 700; letter-spacing: 2px;
+            text-transform: uppercase; color: var(--v-pink);
+            margin-bottom: 1.2rem;
+        }
+        .form-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 1.75rem; font-weight: 800;
+            color: #fff; margin-bottom: 0.25rem;
+        }
+        .form-sub { font-size: 0.875rem; color: var(--text-muted); margin-bottom: 1.6rem; }
+
+        /* Two-col row */
+        .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+
+        .fgrp { margin-bottom: 1rem; }
+        .flabel {
+            display: block; font-size: 0.78rem; font-weight: 600;
+            color: var(--text-soft); margin-bottom: 0.4rem; letter-spacing: 0.3px;
+        }
+        .fwrap { position: relative; }
+        .fwrap .ficon {
+            position: absolute; left: 0.85rem; top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted); font-size: 0.88rem; pointer-events: none;
+        }
+        .finput, .fselect {
+            width: 100%;
+            background: rgba(255,255,255,0.05);
+            border: 1.5px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 0.72rem 0.85rem 0.72rem 2.4rem;
+            font-size: 0.875rem; color: #fff;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+        .finput::placeholder { color: #3f4b5e; }
+        .finput:focus, .fselect:focus {
+            border-color: var(--v-pink);
+            background: rgba(236,72,153,0.07);
+            box-shadow: 0 0 0 3px rgba(236,72,153,0.2);
+        }
+        /* No left-icon for plain */
+        .finput.no-icon, .fselect.no-icon { padding-left: 0.85rem; }
+        .fselect { -webkit-appearance: none; }
+        .fselect option { background: #1a1f2e; color: #fff; }
+
+        /* Password strength bar */
+        .pwd-bar { height: 4px; border-radius: 2px; background: rgba(255,255,255,0.08); margin-top: 5px; overflow: hidden; }
+        .pwd-fill { height: 100%; border-radius: 2px; width: 0; transition: all 0.3s; }
+
+        /* CTA */
+        .btn-cta {
+            width: 100%;
+            padding: 0.85rem;
+            background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 60%, #06b6d4 100%);
+            color: #fff; border: none; border-radius: 10px;
+            font-size: 0.95rem; font-weight: 700;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer; margin-top: 0.25rem; margin-bottom: 1.25rem;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 24px rgba(236,72,153,0.4), 0 0 50px rgba(139,92,246,0.15);
+            display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+        }
+        .btn-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 36px rgba(236,72,153,0.55), 0 0 60px rgba(139,92,246,0.25);
+            filter: brightness(1.08);
+        }
+
+        .footer-link {
+            text-align: center; font-size: 0.85rem; color: var(--text-muted);
+        }
+        .footer-link a { color: var(--v-purple); font-weight: 600; text-decoration: none; transition: color 0.2s; }
+        .footer-link a:hover { color: #c4b5fd; }
+
+        /* Flash */
+        .flash-zone { position: fixed; top: 1rem; right: 1rem; z-index: 9999; min-width: 300px; }
+        .flash-msg {
+            background: #0f1420; border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px; padding: 0.75rem 1rem; margin-bottom: 0.5rem;
+            font-size: 0.875rem; display: flex; align-items: center; gap: 0.6rem;
+            animation: fin 0.3s ease;
+        }
+        .flash-msg.success { border-color: #10b981; color: #34d399; }
+        .flash-msg.danger  { border-color: #ef4444; color: #f87171; }
+        .flash-msg.info    { border-color: #6366f1; color: #818cf8; }
+        @keyframes fin { from{opacity:0;transform:translateX(16px);} to{opacity:1;transform:none;} }
+
+        @media (max-width: 960px) {
+            .left { display: none; }
+            .right { flex: 1; padding: 2rem 1.5rem; }
+            html, body { overflow: auto; }
+        }
+    </style>
 </head>
 <body>
 
+<div class="flash-zone">
 {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
-    <div style="position:fixed;top:1rem;right:1rem;z-index:9999;min-width:300px;">
         {% for category, message in messages %}
-        <div class="alert alert-{{ category }} alert-dismissible" role="alert" style="margin-bottom:0.5rem;">
-            <i class="bi bi-info-circle"></i> {{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <div class="flash-msg {{ category }}">
+            <i class="bi bi-{% if category == 'success' %}check-circle-fill{% elif category == 'danger' %}x-circle-fill{% else %}info-circle-fill{% endif %}"></i>
+            {{ message }}
         </div>
         {% endfor %}
-    </div>
     {% endif %}
 {% endwith %}
+</div>
 
-<div class="auth-wrapper" style="align-items:flex-start;padding-top:3rem;">
-    <!-- Animated background -->
-    <div style="position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0;">
-        <div style="position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(108,99,255,0.12) 0%,transparent 70%);top:-100px;right:-100px;animation:float1 9s ease-in-out infinite;"></div>
-        <div style="position:absolute;width:350px;height:350px;border-radius:50%;background:radial-gradient(circle,rgba(52,211,153,0.08) 0%,transparent 70%);bottom:-50px;left:-80px;animation:float2 11s ease-in-out infinite;"></div>
+<div class="split">
+
+    <!-- ══════ LEFT PANEL ══════ -->
+    <div class="left">
+        <div class="orb orb-a"></div>
+        <div class="orb orb-b"></div>
+        <div class="orb orb-c"></div>
+
+        <div class="brand">
+            <div class="brand-icon"><i class="bi bi-calendar-check-fill"></i></div>
+            <div>
+                <div class="brand-name">LeaveFlow Pro</div>
+                <div class="brand-sub">Leave Management Intelligence</div>
+            </div>
+        </div>
+
+        <div class="hero">
+            <div class="eyebrow">Join the Team</div>
+            <h1 class="headline">
+                Your Journey<br>
+                <span class="grad">Starts Here.</span>
+            </h1>
+            <p class="tagline">
+                Create your account and get instant access to seamless leave management — designed for modern teams.
+            </p>
+
+            <div class="steps">
+                <div class="step">
+                    <div class="step-num" style="background:rgba(236,72,153,0.2);color:#ec4899;">1</div>
+                    <div class="step-text"><b>Fill your details</b> — Name, email and department</div>
+                </div>
+                <div class="step">
+                    <div class="step-num" style="background:rgba(139,92,246,0.2);color:#a78bfa;">2</div>
+                    <div class="step-text"><b>Set your password</b> — Secure and private</div>
+                </div>
+                <div class="step">
+                    <div class="step-num" style="background:rgba(6,182,212,0.2);color:#06b6d4;">3</div>
+                    <div class="step-text"><b>Assign your manager</b> — So requests route correctly</div>
+                </div>
+                <div class="step">
+                    <div class="step-num" style="background:rgba(16,185,129,0.2);color:#10b981;">4</div>
+                    <div class="step-text"><b>You're in!</b> — Start submitting leave requests immediately</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="quote-bar">
+            <p>Every great team runs on trust — and trust starts with transparency in time off.</p>
+        </div>
     </div>
 
-    <div class="auth-card" style="max-width:560px;position:relative;z-index:1;">
-        <!-- Logo -->
-        <div class="auth-logo">
-            <div class="auth-logo-icon">
-                <i class="bi bi-person-plus-fill"></i>
-            </div>
-            <h1 class="auth-title">Create Account</h1>
-            <p class="auth-subtitle">Join LeaveFlow Pro as a new employee</p>
-        </div>
+    <!-- ══════ RIGHT PANEL ══════ -->
+    <div class="right">
+        <div class="badge-new"><i class="bi bi-person-plus-fill"></i> New Account</div>
+        <h2 class="form-title">Create your account</h2>
+        <p class="form-sub">Join LeaveFlow Pro and manage your leave effortlessly</p>
 
         <form method="POST" id="registerForm" novalidate>
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
 
             <!-- Name Row -->
-            <div class="row g-3 mb-3">
-                <div class="col-md-6">
-                    <label for="first_name" class="form-label">First Name</label>
-                    <input type="text" class="form-control" id="first_name" name="first_name"
-                           placeholder="Jane" required autocomplete="given-name">
+            <div class="row2">
+                <div class="fgrp">
+                    <label for="first_name" class="flabel">First Name</label>
+                    <div class="fwrap">
+                        <i class="bi bi-person ficon"></i>
+                        <input type="text" class="finput" id="first_name" name="first_name"
+                               placeholder="Jane" required autocomplete="given-name">
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <label for="last_name" class="form-label">Last Name</label>
-                    <input type="text" class="form-control" id="last_name" name="last_name"
-                           placeholder="Doe" required autocomplete="family-name">
+                <div class="fgrp">
+                    <label for="last_name" class="flabel">Last Name</label>
+                    <div class="fwrap">
+                        <i class="bi bi-person ficon"></i>
+                        <input type="text" class="finput" id="last_name" name="last_name"
+                               placeholder="Doe" required autocomplete="family-name">
+                    </div>
                 </div>
             </div>
 
             <!-- Email -->
-            <div class="mb-3">
-                <label for="email" class="form-label">Email Address</label>
-                <div class="input-group">
-                    <span class="input-group-text"><i class="bi bi-envelope"></i></span>
-                    <input type="email" class="form-control" id="email" name="email"
+            <div class="fgrp">
+                <label for="email" class="flabel">Email Address</label>
+                <div class="fwrap">
+                    <i class="bi bi-envelope ficon"></i>
+                    <input type="email" class="finput" id="email" name="email"
                            placeholder="jane@company.com" required autocomplete="email">
                 </div>
             </div>
 
             <!-- Username -->
-            <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
-                <div class="input-group">
-                    <span class="input-group-text"><i class="bi bi-at"></i></span>
-                    <input type="text" class="form-control" id="username" name="username"
+            <div class="fgrp">
+                <label for="username" class="flabel">Username</label>
+                <div class="fwrap">
+                    <i class="bi bi-at ficon"></i>
+                    <input type="text" class="finput" id="username" name="username"
                            placeholder="janedoe" required autocomplete="username">
                 </div>
             </div>
 
-            <!-- Department -->
-            <div class="mb-3">
-                <label for="department" class="form-label">Department</label>
-                <div class="input-group">
-                    <span class="input-group-text"><i class="bi bi-building"></i></span>
-                    <select class="form-select" id="department" name="department" required>
-                        <option value="">Select Department</option>
-                        <option value="Engineering">Engineering</option>
-                        <option value="Human Resources">Human Resources</option>
-                        <option value="Finance">Finance</option>
-                        <option value="Marketing">Marketing</option>
-                        <option value="Operations">Operations</option>
-                        <option value="Sales">Sales</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- Manager -->
-            <div class="mb-3">
-                <label for="manager_id" class="form-label">Reporting Manager <span style="color:var(--text-muted);font-weight:400;">(optional)</span></label>
-                <div class="input-group">
-                    <span class="input-group-text"><i class="bi bi-diagram-3"></i></span>
-                    <select class="form-select" id="manager_id" name="manager_id">
-                        <option value="">No Manager</option>
-                        {% for m in managers %}
-                        <option value="{{ m.id }}">{{ m.full_name }} — {{ m.department }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-            </div>
-
-            <!-- Passwords -->
-            <div class="row g-3 mb-4">
-                <div class="col-md-6">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" name="password"
-                           placeholder="Min. 6 characters" required minlength="6" autocomplete="new-password">
-                    <div id="pwdStrength" style="height:4px;border-radius:2px;margin-top:6px;background:var(--border);overflow:hidden;">
-                        <div id="pwdStrengthBar" style="height:100%;width:0%;border-radius:2px;transition:all 0.3s;"></div>
+            <!-- Department + Manager Row -->
+            <div class="row2">
+                <div class="fgrp">
+                    <label for="department" class="flabel">Department</label>
+                    <div class="fwrap">
+                        <i class="bi bi-building ficon"></i>
+                        <select class="fselect" id="department" name="department" required>
+                            <option value="">Select department</option>
+                            <option value="Engineering">Engineering</option>
+                            <option value="Human Resources">Human Resources</option>
+                            <option value="Finance">Finance</option>
+                            <option value="Marketing">Marketing</option>
+                            <option value="Operations">Operations</option>
+                            <option value="Sales">Sales</option>
+                        </select>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <label for="confirm_password" class="form-label">Confirm Password</label>
-                    <input type="password" class="form-control" id="confirm_password" name="confirm_password"
+                <div class="fgrp">
+                    <label for="manager_id" class="flabel">Manager <span style="color:var(--text-muted);font-weight:400;">(optional)</span></label>
+                    <div class="fwrap">
+                        <i class="bi bi-diagram-3 ficon"></i>
+                        <select class="fselect" id="manager_id" name="manager_id">
+                            <option value="">No Manager</option>
+                            {% for m in managers %}
+                            <option value="{{ m.id }}">{{ m.full_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Passwords Row -->
+            <div class="row2">
+                <div class="fgrp">
+                    <label for="password" class="flabel">Password</label>
+                    <input type="password" class="finput no-icon" id="password" name="password"
+                           placeholder="Min. 6 characters" required minlength="6" autocomplete="new-password">
+                    <div class="pwd-bar"><div class="pwd-fill" id="pwdFill"></div></div>
+                </div>
+                <div class="fgrp">
+                    <label for="confirm_password" class="flabel">Confirm Password</label>
+                    <input type="password" class="finput no-icon" id="confirm_password" name="confirm_password"
                            placeholder="Repeat password" required autocomplete="new-password">
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary w-100 mb-4" id="registerBtn" style="padding:.75rem;">
-                <i class="bi bi-person-check"></i>
-                <span>Create Account</span>
+            <button type="submit" class="btn-cta" id="registerBtn">
+                <i class="bi bi-person-check-fill"></i> Create Account
             </button>
         </form>
 
-        <div class="text-center" style="font-size:0.875rem;color:var(--text-muted);">
+        <div class="footer-link">
             Already have an account?
-            <a href="{{ url_for('auth.login') }}" style="color:var(--accent);font-weight:600;">
-                Sign in <i class="bi bi-arrow-right"></i>
-            </a>
+            <a href="{{ url_for('auth.login') }}">Sign in <i class="bi bi-arrow-right"></i></a>
         </div>
     </div>
 </div>
 
-<style>
-@keyframes float1 {
-  0%,100%{transform:translate(0,0);}
-  50%{transform:translate(-40px,30px);}
-}
-@keyframes float2 {
-  0%,100%{transform:translate(0,0);}
-  50%{transform:translate(40px,-25px);}
-}
-</style>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 // Password strength
-document.getElementById('password').addEventListener('input', function() {
-    const val = this.value;
-    const bar = document.getElementById('pwdStrengthBar');
-    let strength = 0;
-    if (val.length >= 6) strength++;
-    if (val.length >= 10) strength++;
-    if (/[A-Z]/.test(val)) strength++;
-    if (/[0-9]/.test(val)) strength++;
-    if (/[^A-Za-z0-9]/.test(val)) strength++;
-    const colors = ['','#F87171','#FBBF24','#FBBF24','#34D399','#34D399'];
-    const widths = [0, 20, 40, 60, 80, 100];
-    bar.style.width = widths[strength] + '%';
-    bar.style.background = colors[strength];
+document.getElementById('password').addEventListener('input', function () {
+    const v = this.value, fill = document.getElementById('pwdFill');
+    let s = 0;
+    if (v.length >= 6) s++;
+    if (v.length >= 10) s++;
+    if (/[A-Z]/.test(v)) s++;
+    if (/[0-9]/.test(v)) s++;
+    if (/[^A-Za-z0-9]/.test(v)) s++;
+    const colors = ['', '#f87171', '#fb923c', '#facc15', '#34d399', '#10b981'];
+    fill.style.width = (s * 20) + '%';
+    fill.style.background = colors[s];
 });
 
-// Confirm password match
-document.getElementById('confirm_password').addEventListener('input', function() {
-    const pwd = document.getElementById('password').value;
-    if (this.value && this.value !== pwd) {
-        this.style.borderColor = 'rgba(248,113,113,0.6)';
-    } else {
-        this.style.borderColor = '';
-    }
+// Confirm match
+document.getElementById('confirm_password').addEventListener('input', function () {
+    const ok = this.value === document.getElementById('password').value;
+    this.style.borderColor = this.value ? (ok ? '#10b981' : '#ef4444') : '';
+    this.style.boxShadow = this.value ? (ok ? '0 0 0 3px rgba(16,185,129,0.2)' : '0 0 0 3px rgba(239,68,68,0.2)') : '';
 });
+
+// Flash dismiss
+setTimeout(() => {
+    document.querySelectorAll('.flash-msg').forEach(el => {
+        el.style.transition = 'opacity 0.4s';
+        el.style.opacity = '0';
+        setTimeout(() => el.remove(), 400);
+    });
+}, 4000);
 </script>
 </body>
 </html>
