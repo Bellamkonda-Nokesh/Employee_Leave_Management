@@ -47,3 +47,6 @@ instance/
 .idea/
 *.db
 *.sqlite3
+
+# Local dev scripts — do not deploy
+seed_data.py

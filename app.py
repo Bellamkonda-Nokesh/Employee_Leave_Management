@@ -82,7 +82,10 @@ def create_app():
     with app.app_context():
         import models
         db.create_all()
-        _seed_data()
+        # Skip seeding on Vercel/production — Vercel automatically sets VERCEL=1.
+        # Locally (no VERCEL variable), seeding runs as normal. No .env changes needed.
+        if not os.environ.get("VERCEL"):
+            _seed_data()
 
     return app
 
